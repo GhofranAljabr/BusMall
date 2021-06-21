@@ -1,0 +1,37 @@
+body {
+  width: 960px;
+  margin: auto;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial;
+}
+.section1 {
+  display: grid;
+  grid-template-rows: 100px 1fr 50px;
+  gap: 20px;
+}
+.image-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.image-section img {
+  height: 500px;
+  object-fit: cover;
+}
+
+header {
+  background: rgb(236, 160, 160);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+footer {
+  background: rgb(80, 48, 48);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(255, 238, 238);
+  text-transform: capitalize;
+}
