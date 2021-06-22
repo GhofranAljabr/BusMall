@@ -30,42 +30,49 @@ let imageSection = document.getElementById('imageSection');
 let leftImage = document.getElementById( 'leftImage' );
 let middelImage = document.getElementById( 'middelImage' );
 let rightImage = document.getElementById( 'rightImage' );
+let viewResult = document.getElementById( 'viewResult' );
+let listOfResults = document.getElementById( 'listOfResults' );
+let ul =document.getElementById('listOfResults');
 
+let round = 25;
 
 let counter = 0;
+
+ 
+ let leftIndex;
+ let rightIndex;
+ let middelIndex;
+
 
 function Img( name, src ) {
   this.name = name;
   this.src = `./img/${src}`;
   this.views = 0;
+  this.click =0;
   Img.all.push(this);
 }
 
 Img.all = [];
 
 for( let i = 0; i < imgArray.length; i++ ) {
-  
+  let ImgName =imgArray[i].split('.')[0];
   new Img( imgArray[i].split( '.' )[0], imgArray[i] );
 }
 
 function render() {
-    let leftIndex = randomNumber(0, imgArray.length - 1);
-    let rightIndex;
+     leftIndex = randomNumber(0, imgArray.length - 1);
+    
     do {
         rightIndex = randomNumber(0, imgArray.length - 1);
-      } while( leftIndex === rightIndex );
-
-      let middelIndex;
-
-      do {
         middelIndex = randomNumber(0, imgArray.length - 1);
-      } while( leftIndex === middelIndex);
-      ( rightIndex === middelIndex );
+      } while( leftIndex === middelIndex || leftIndex === rightIndex || middelIndex === rightIndex );
+
+      
 
 
       rightImage.src = Img.all[rightIndex].src;
       leftImage.src = Img.all[leftIndex].src;
-      middelImage.src = Img.all[leftIndex].src;
+      middelImage.src = Img.all[middelIndex].src;
     
       Img.all[rightIndex].views++;
       Img.all[leftIndex].views++;
@@ -73,19 +80,43 @@ function render() {
     
       console.log(Img.all);
     }
+    
+   render();
 
-    function eventHandler(e) {
+    function clickFunction(e) {
      
         if((e.target.id === 'rightImage' || e.target.id === 'leftImage'|| e.target.id === 'middelImage') && counter < 25){
-          render();
-          console.log(counter);
-          counter++;
-      
+         
+        if(e.target.id === 'rightImage' ){
+          Img.all[rightIndex].click++
         }
+        if(e.target.id === 'leftImage' ){
+          Img.all[leftlIndex].click++
+        }
+        if(e.target.id === 'middelImage' ){
+          Img.all[middelIndex].click++
+        }
+          render();
+          
+           counter++;
+
       
       }
+      
+    }
+    function printResult(p){
+      for (let i = 0; i < Img.all.length; i++) {
+        let li = document.createElement('li');
+        ul.appendChild (li)
+        li.textContent = `${Img.all[i].name} had ${Img.all[i].click} votes, and was seen ${Img.all[i].views} times.`
+        }
+        viewResult.removeEventListener('click', printResult);
+      }
 
-      imageSection.addEventListener('click', eventHandler);
+     
+
+      imageSection.addEventListener('click', clickFunction)
+        viewResult.addEventListener('click', printResult);
 
 render();
 leftImage.setAttribute('src', Img.all[0].src)
